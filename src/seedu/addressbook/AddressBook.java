@@ -383,6 +383,7 @@ public class AddressBook {
         final String[] commandTypeAndParams = splitCommandWordAndArgs(userInputString);
         final String commandType = commandTypeAndParams[0];
         final String commandArgs = commandTypeAndParams[1];
+
         switch (commandType) {
         case COMMAND_ADD_WORD:
             return executeAddPerson(commandArgs);
@@ -521,6 +522,7 @@ public class AddressBook {
      */
     private static ArrayList<String[]> getPersonsWithNameContainingAnyKeyword(Collection<String> keywords) {
         final ArrayList<String[]> matchedPersons = new ArrayList<>();
+
         for (String[] person : getAllPersonsInAddressBook()) {
             final Set<String> wordsInName = new HashSet<>(splitByWhitespace(getNameFromPerson(person)));
             if (!Collections.disjoint(wordsInName, keywords)) {
@@ -560,10 +562,12 @@ public class AddressBook {
             return getMessageForInvalidCommandInput(COMMAND_DELETE_WORD, getUsageInfoForDeleteCommand());
         }
         final int targetVisibleIndex = extractTargetIndexFromDeletePersonArgs(commandArgs);
+
         if (!isDisplayIndexValidForLastPersonListingView(targetVisibleIndex)) {
             return MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
         }
         final String[] targetInModel = getPersonByLastVisibleIndex(targetVisibleIndex);
+
         return deletePersonFromAddressBook(targetInModel) ? getMessageForSuccessfulDelete(targetInModel) // success
                                                           : MESSAGE_PERSON_NOT_IN_ADDRESSBOOK; // not found
     }
