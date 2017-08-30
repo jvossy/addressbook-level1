@@ -111,6 +111,12 @@ public class AddressBook {
     private static final String COMMAND_FIND_PARAMETERS = "KEYWORD [MORE_KEYWORDS]";
     private static final String COMMAND_FIND_EXAMPLE = COMMAND_FIND_WORD + " alice bob charlie";
 
+    private static final String COMMAND_FIND_INSENSITIVE_WORD = "findci";
+    private static final String COMMAND_FIND_INSENSITIVE_DESC = "Finds all persons whose names contain any of the specified "
+                                        + "keywords (case-insensitive) and displays them as a list with index numbers.";
+    private static final String COMMAND_FIND_INSENSITIVE_PARAMETERS = "KEYWORD [MORE_KEYWORDS]";
+    private static final String COMMAND_FIND_INSENSITIVE_EXAMPLE = COMMAND_FIND_INSENSITIVE_WORD + " AlIcE Bob carl";
+
     private static final String COMMAND_LIST_WORD = "list";
     private static final String COMMAND_LIST_DESC = "Displays all persons as a list with index numbers.";
     private static final String COMMAND_LIST_EXAMPLE = COMMAND_LIST_WORD;
@@ -371,6 +377,8 @@ public class AddressBook {
         switch (commandType) {
         case COMMAND_ADD_WORD:
             return executeAddPerson(commandArgs);
+        case COMMAND_FIND_INSENSITIVE_WORD:
+            return executeFindPersonsCaseInsensitive(commandArgs.toLowerCase());
         case COMMAND_FIND_WORD:
             return executeFindPersons(commandArgs);
         case COMMAND_LIST_WORD:
@@ -457,6 +465,20 @@ public class AddressBook {
     }
 
     /**
+     * Finds and lists all persons in address book whose name contains any of the argument keywords.
+     * Keyword matching WILL NOT BE(is currently) case sensitive
+     *
+     * @param commandArgs full command args string from the user
+     * @return feedback display message for the operation result
+     */
+    private static String executeFindPersonsCaseInsensitive(String commandArgs) {
+        final Set<String> keywords = extractKeywordsFromFindPersonArgs(commandArgs);
+        final ArrayList<String[]> personsFound = getPersonsWithNameContainingAnyKeywordCaseInsensitive(keywords);
+        showToUser(personsFound);
+        return getMessageForPersonsDisplayedSummary(personsFound);
+    }
+
+    /**
      * Constructs a feedback message to summarise an operation that displayed a listing of persons.
      *
      * @param personsDisplayed used to generate summary
@@ -486,6 +508,23 @@ public class AddressBook {
         final ArrayList<String[]> matchedPersons = new ArrayList<>();
         for (String[] person : getAllPersonsInAddressBook()) {
             final Set<String> wordsInName = new HashSet<>(splitByWhitespace(getNameFromPerson(person)));
+            if (!Collections.disjoint(wordsInName, keywords)) {
+                matchedPersons.add(person);
+            }
+        }
+        return matchedPersons;
+    }
+
+    /**
+     * Retrieves all persons in the full model whose names contain some of the specified keywords. This version is not case sensitive
+     *
+     * @param keywords for searching
+     * @return list of persons in full model with name containing some of the keywords
+     */
+    private static ArrayList<String[]> getPersonsWithNameContainingAnyKeywordCaseInsensitive(Collection<String> keywords) {
+        final ArrayList<String[]> matchedPersons = new ArrayList<>();
+        for (String[] person : getAllPersonsInAddressBook()) {
+            final Set<String> wordsInName = new HashSet<>(splitByWhitespace(getNameFromPerson(person).toLowerCase()));
             if (!Collections.disjoint(wordsInName, keywords)) {
                 matchedPersons.add(person);
             }
@@ -1084,6 +1123,7 @@ public class AddressBook {
     private static String getUsageInfoForAllCommands() {
         return getUsageInfoForAddCommand() + LS
                 + getUsageInfoForFindCommand() + LS
+                + getUsageInfoForFindciCommand() + LS
                 + getUsageInfoForViewCommand() + LS
                 + getUsageInfoForDeleteCommand() + LS
                 + getUsageInfoForClearCommand() + LS
@@ -1103,6 +1143,13 @@ public class AddressBook {
         return String.format(MESSAGE_COMMAND_HELP, COMMAND_FIND_WORD, COMMAND_FIND_DESC) + LS
                 + String.format(MESSAGE_COMMAND_HELP_PARAMETERS, COMMAND_FIND_PARAMETERS) + LS
                 + String.format(MESSAGE_COMMAND_HELP_EXAMPLE, COMMAND_FIND_EXAMPLE) + LS;
+    }
+
+    /** Returns the string for showing 'findci' command usage instruction */
+    private static String getUsageInfoForFindciCommand() {
+        return String.format(MESSAGE_COMMAND_HELP, COMMAND_FIND_INSENSITIVE_WORD, COMMAND_FIND_INSENSITIVE_DESC) + LS
+                + String.format(MESSAGE_COMMAND_HELP_PARAMETERS, COMMAND_FIND_INSENSITIVE_PARAMETERS) + LS
+                + String.format(MESSAGE_COMMAND_HELP_EXAMPLE, COMMAND_FIND_INSENSITIVE_EXAMPLE) + LS;
     }
 
     /** Returns the string for showing 'delete' command usage instruction */
