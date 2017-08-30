@@ -236,11 +236,16 @@ public class AddressBook {
      */
 
     private static void showWelcomeMessage() {
-        showToUser(DIVIDER, DIVIDER, VERSION, MESSAGE_WELCOME, DIVIDER);
+        showToUser(DIVIDER,
+                DIVIDER,
+                VERSION,
+                MESSAGE_WELCOME,
+                DIVIDER);
     }
 
     private static void showResultToUser(String result) {
-        showToUser(result, DIVIDER);
+        showToUser(result,
+                DIVIDER);
     }
 
     /*
@@ -288,7 +293,8 @@ public class AddressBook {
     private static void setupGivenFileForStorage(String filePath) {
 
         if (!isValidFilePath(filePath)) {
-            showToUser(String.format(MESSAGE_INVALID_FILE, filePath));
+            showToUser(String.format(MESSAGE_INVALID_FILE,
+                    filePath));
             exitProgram();
         }
 
@@ -416,7 +422,9 @@ public class AddressBook {
      * @return invalid command args feedback message
      */
     private static String getMessageForInvalidCommandInput(String userCommand, String correctUsageInfo) {
-        return String.format(MESSAGE_INVALID_COMMAND_FORMAT, userCommand, correctUsageInfo);
+        return String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                userCommand,
+                correctUsageInfo);
     }
 
     /**
@@ -432,7 +440,8 @@ public class AddressBook {
 
         // checks if args are valid (decode result will not be present if the person is invalid)
         if (!decodeResult.isPresent()) {
-            return getMessageForInvalidCommandInput(COMMAND_ADD_WORD, getUsageInfoForAddCommand());
+            return getMessageForInvalidCommandInput(COMMAND_ADD_WORD,
+                    getUsageInfoForAddCommand());
         }
 
         // add the person as specified
@@ -450,7 +459,9 @@ public class AddressBook {
      */
     private static String getMessageForSuccessfulAddPerson(String[] addedPerson) {
         return String.format(MESSAGE_ADDED,
-                getNameFromPerson(addedPerson), getPhoneFromPerson(addedPerson), getEmailFromPerson(addedPerson));
+                getNameFromPerson(addedPerson),
+                getPhoneFromPerson(addedPerson),
+                getEmailFromPerson(addedPerson));
     }
 
     /**
@@ -488,7 +499,8 @@ public class AddressBook {
      * @return summary message for persons displayed
      */
     private static String getMessageForPersonsDisplayedSummary(ArrayList<String[]> personsDisplayed) {
-        return String.format(MESSAGE_PERSONS_FOUND_OVERVIEW, personsDisplayed.size());
+        return String.format(MESSAGE_PERSONS_FOUND_OVERVIEW,
+                personsDisplayed.size());
     }
 
     /**
@@ -599,7 +611,8 @@ public class AddressBook {
      * @return successful delete person feedback message
      */
     private static String getMessageForSuccessfulDelete(String[] deletedPerson) {
-        return String.format(MESSAGE_DELETE_PERSON_SUCCESS, getMessageForFormattedPersonData(deletedPerson));
+        return String.format(MESSAGE_DELETE_PERSON_SUCCESS,
+                getMessageForFormattedPersonData(deletedPerson));
     }
 
     /**
@@ -702,8 +715,9 @@ public class AddressBook {
      * @return formatted listing message with index
      */
     private static String getIndexedPersonListElementMessage(int visibleIndex, String[] person) {
-        return String.format(MESSAGE_DISPLAY_LIST_ELEMENT_INDEX, visibleIndex) +
-                getMessageForFormattedPersonData(person);
+        return String.format(MESSAGE_DISPLAY_LIST_ELEMENT_INDEX,
+                visibleIndex)
+                + getMessageForFormattedPersonData(person);
     }
 
     /**
@@ -714,7 +728,9 @@ public class AddressBook {
      */
     private static String getMessageForFormattedPersonData(String[] person) {
         return String.format(MESSAGE_DISPLAY_PERSON_DATA,
-                getNameFromPerson(person), getPhoneFromPerson(person), getEmailFromPerson(person));
+                getNameFromPerson(person),
+                getPhoneFromPerson(person),
+                getEmailFromPerson(person));
     }
 
     /**
@@ -755,13 +771,16 @@ public class AddressBook {
             return;
         }
 
-        showToUser(String.format(MESSAGE_ERROR_MISSING_STORAGE_FILE, filePath));
+        showToUser(String.format(MESSAGE_ERROR_MISSING_STORAGE_FILE,
+                filePath));
 
         try {
             storageFile.createNewFile();
-            showToUser(String.format(MESSAGE_STORAGE_FILE_CREATED, filePath));
+            showToUser(String.format(MESSAGE_STORAGE_FILE_CREATED,
+                    filePath));
         } catch (IOException ioe) {
-            showToUser(String.format(MESSAGE_ERROR_CREATING_STORAGE_FILE, filePath));
+            showToUser(String.format(MESSAGE_ERROR_CREATING_STORAGE_FILE,
+                    filePath));
             exitProgram();
         }
     }
@@ -791,10 +810,12 @@ public class AddressBook {
         try {
             lines = new ArrayList<>(Files.readAllLines(Paths.get(filePath)));
         } catch (FileNotFoundException fnfe) {
-            showToUser(String.format(MESSAGE_ERROR_MISSING_STORAGE_FILE, filePath));
+            showToUser(String.format(MESSAGE_ERROR_MISSING_STORAGE_FILE,
+                    filePath));
             exitProgram();
         } catch (IOException ioe) {
-            showToUser(String.format(MESSAGE_ERROR_READING_FROM_FILE, filePath));
+            showToUser(String.format(MESSAGE_ERROR_READING_FROM_FILE,
+                    filePath));
             exitProgram();
         }
         return lines;
@@ -808,9 +829,11 @@ public class AddressBook {
     private static void savePersonsToFile(ArrayList<String[]> persons, String filePath) {
         final ArrayList<String> linesToWrite = encodePersonsToStrings(persons);
         try {
-            Files.write(Paths.get(storageFilePath), linesToWrite);
+            Files.write(Paths.get(storageFilePath),
+                    linesToWrite);
         } catch (IOException ioe) {
-            showToUser(String.format(MESSAGE_ERROR_WRITING_TO_FILE, filePath));
+            showToUser(String.format(MESSAGE_ERROR_WRITING_TO_FILE,
+                    filePath));
             exitProgram();
         }
     }
@@ -842,7 +865,8 @@ public class AddressBook {
     private static boolean deletePersonFromAddressBook(String[] exactPerson) {
         final boolean changed = ALL_PERSONS.remove(exactPerson);
         if (changed) {
-            savePersonsToFile(getAllPersonsInAddressBook(), storageFilePath);
+            savePersonsToFile(getAllPersonsInAddressBook(),
+                    storageFilePath);
         }
         return changed;
     }
@@ -859,7 +883,8 @@ public class AddressBook {
      */
     private static void clearAddressBook() {
         ALL_PERSONS.clear();
-        savePersonsToFile(getAllPersonsInAddressBook(), storageFilePath);
+        savePersonsToFile(getAllPersonsInAddressBook(),
+                storageFilePath);
     }
 
     /**
@@ -930,7 +955,9 @@ public class AddressBook {
      */
     private static String encodePersonToString(String[] person) {
         return String.format(PERSON_STRING_REPRESENTATION,
-                getNameFromPerson(person), getPhoneFromPerson(person), getEmailFromPerson(person));
+                getNameFromPerson(person),
+                getPhoneFromPerson(person),
+                getEmailFromPerson(person));
     }
 
     /**
@@ -1035,13 +1062,15 @@ public class AddressBook {
 
         // phone is last arg, target is from prefix to end of string
         if (indexOfPhonePrefix > indexOfEmailPrefix) {
-            return removePrefixSign(encoded.substring(indexOfPhonePrefix, encoded.length()).trim(),
+            return removePrefixSign(encoded.substring(indexOfPhonePrefix,
+                    encoded.length()).trim(),
                     PERSON_DATA_PREFIX_PHONE);
 
         // phone is middle arg, target is from own prefix to next prefix
         } else {
             return removePrefixSign(
-                    encoded.substring(indexOfPhonePrefix, indexOfEmailPrefix).trim(),
+                    encoded.substring(indexOfPhonePrefix,
+                            indexOfEmailPrefix).trim(),
                     PERSON_DATA_PREFIX_PHONE);
         }
     }
@@ -1140,54 +1169,95 @@ public class AddressBook {
 
     /** Returns the string for showing 'add' command usage instruction */
     private static String getUsageInfoForAddCommand() {
-        return String.format(MESSAGE_COMMAND_HELP, COMMAND_ADD_WORD, COMMAND_ADD_DESC) + LS
-                + String.format(MESSAGE_COMMAND_HELP_PARAMETERS, COMMAND_ADD_PARAMETERS) + LS
-                + String.format(MESSAGE_COMMAND_HELP_EXAMPLE, COMMAND_ADD_EXAMPLE) + LS;
+        return String.format(MESSAGE_COMMAND_HELP,
+                        COMMAND_ADD_WORD,
+                        COMMAND_ADD_DESC)
+                + LS
+                + String.format(MESSAGE_COMMAND_HELP_PARAMETERS,
+                        COMMAND_ADD_PARAMETERS)
+                + LS
+                + String.format(MESSAGE_COMMAND_HELP_EXAMPLE,
+                        COMMAND_ADD_EXAMPLE)
+                + LS;
     }
 
     /** Returns the string for showing 'find' command usage instruction */
     private static String getUsageInfoForFindCommand() {
-        return String.format(MESSAGE_COMMAND_HELP, COMMAND_FIND_WORD, COMMAND_FIND_DESC) + LS
-                + String.format(MESSAGE_COMMAND_HELP_PARAMETERS, COMMAND_FIND_PARAMETERS) + LS
-                + String.format(MESSAGE_COMMAND_HELP_EXAMPLE, COMMAND_FIND_EXAMPLE) + LS;
+        return String.format(MESSAGE_COMMAND_HELP,
+                        COMMAND_FIND_WORD,
+                        COMMAND_FIND_DESC)
+                + LS
+                + String.format(MESSAGE_COMMAND_HELP_PARAMETERS,
+                        COMMAND_FIND_PARAMETERS)
+                + LS
+                + String.format(MESSAGE_COMMAND_HELP_EXAMPLE,
+                        COMMAND_FIND_EXAMPLE)
+                + LS;
     }
 
     /** Returns the string for showing 'findci' command usage instruction */
     private static String getUsageInfoForFindciCommand() {
-        return String.format(MESSAGE_COMMAND_HELP, COMMAND_FIND_INSENSITIVE_WORD, COMMAND_FIND_INSENSITIVE_DESC) + LS
-                + String.format(MESSAGE_COMMAND_HELP_PARAMETERS, COMMAND_FIND_INSENSITIVE_PARAMETERS) + LS
-                + String.format(MESSAGE_COMMAND_HELP_EXAMPLE, COMMAND_FIND_INSENSITIVE_EXAMPLE) + LS;
+        return String.format(MESSAGE_COMMAND_HELP,
+                        COMMAND_FIND_INSENSITIVE_WORD,
+                        COMMAND_FIND_INSENSITIVE_DESC)
+                + LS
+                + String.format(MESSAGE_COMMAND_HELP_PARAMETERS,
+                        COMMAND_FIND_INSENSITIVE_PARAMETERS)
+                + LS
+                + String.format(MESSAGE_COMMAND_HELP_EXAMPLE,
+                        COMMAND_FIND_INSENSITIVE_EXAMPLE)
+                + LS;
     }
 
     /** Returns the string for showing 'delete' command usage instruction */
     private static String getUsageInfoForDeleteCommand() {
-        return String.format(MESSAGE_COMMAND_HELP, COMMAND_DELETE_WORD, COMMAND_DELETE_DESC) + LS
-                + String.format(MESSAGE_COMMAND_HELP_PARAMETERS, COMMAND_DELETE_PARAMETER) + LS
-                + String.format(MESSAGE_COMMAND_HELP_EXAMPLE, COMMAND_DELETE_EXAMPLE) + LS;
+        return String.format(MESSAGE_COMMAND_HELP,
+                        COMMAND_DELETE_WORD, COMMAND_DELETE_DESC)
+                + LS
+                + String.format(MESSAGE_COMMAND_HELP_PARAMETERS,
+                        COMMAND_DELETE_PARAMETER)
+                + LS
+                + String.format(MESSAGE_COMMAND_HELP_EXAMPLE,
+                        COMMAND_DELETE_EXAMPLE)
+                + LS;
     }
 
     /** Returns string for showing 'clear' command usage instruction */
     private static String getUsageInfoForClearCommand() {
-        return String.format(MESSAGE_COMMAND_HELP, COMMAND_CLEAR_WORD, COMMAND_CLEAR_DESC) + LS
-                + String.format(MESSAGE_COMMAND_HELP_EXAMPLE, COMMAND_CLEAR_EXAMPLE) + LS;
+        return String.format(MESSAGE_COMMAND_HELP,
+                        COMMAND_CLEAR_WORD, COMMAND_CLEAR_DESC)
+                + LS
+                + String.format(MESSAGE_COMMAND_HELP_EXAMPLE,
+                        COMMAND_CLEAR_EXAMPLE)
+                + LS;
     }
 
     /** Returns the string for showing 'view' command usage instruction */
     private static String getUsageInfoForViewCommand() {
-        return String.format(MESSAGE_COMMAND_HELP, COMMAND_LIST_WORD, COMMAND_LIST_DESC) + LS
-                + String.format(MESSAGE_COMMAND_HELP_EXAMPLE, COMMAND_LIST_EXAMPLE) + LS;
+        return String.format(MESSAGE_COMMAND_HELP,
+                        COMMAND_LIST_WORD, COMMAND_LIST_DESC)
+                + LS
+                + String.format(MESSAGE_COMMAND_HELP_EXAMPLE,
+                        COMMAND_LIST_EXAMPLE)
+                + LS;
     }
 
     /** Returns string for showing 'help' command usage instruction */
     private static String getUsageInfoForHelpCommand() {
-        return String.format(MESSAGE_COMMAND_HELP, COMMAND_HELP_WORD, COMMAND_HELP_DESC)
-                + String.format(MESSAGE_COMMAND_HELP_EXAMPLE, COMMAND_HELP_EXAMPLE);
+        return String.format(MESSAGE_COMMAND_HELP,
+                        COMMAND_HELP_WORD,
+                        COMMAND_HELP_DESC)
+                + String.format(MESSAGE_COMMAND_HELP_EXAMPLE,
+                        COMMAND_HELP_EXAMPLE);
     }
 
     /** Returns the string for showing 'exit' command usage instruction */
     private static String getUsageInfoForExitCommand() {
-        return String.format(MESSAGE_COMMAND_HELP, COMMAND_EXIT_WORD, COMMAND_EXIT_DESC)
-                + String.format(MESSAGE_COMMAND_HELP_EXAMPLE, COMMAND_EXIT_EXAMPLE);
+        return String.format(MESSAGE_COMMAND_HELP,
+                        COMMAND_EXIT_WORD,
+                        COMMAND_EXIT_DESC)
+                + String.format(MESSAGE_COMMAND_HELP_EXAMPLE,
+                        COMMAND_EXIT_EXAMPLE);
     }
 
 
