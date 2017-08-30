@@ -89,7 +89,8 @@ public class AddressBook {
     private static final String MESSAGE_PERSONS_FOUND_OVERVIEW = "%1$d persons found!";
     private static final String MESSAGE_STORAGE_FILE_CREATED = "Created new empty storage file: %1$s";
     private static final String MESSAGE_WELCOME = "Welcome to your Address Book!";
-    private static final String MESSAGE_USING_DEFAULT_FILE = "Using default storage file : " + DEFAULT_STORAGE_FILEPATH;
+    private static final String MESSAGE_USING_DEFAULT_FILE = "Using default storage file : "
+            + DEFAULT_STORAGE_FILEPATH;
 
     // These are the prefix strings to define the data type of a command parameter
     private static final String PERSON_DATA_PREFIX_PHONE = "p/";
@@ -107,13 +108,14 @@ public class AddressBook {
 
     private static final String COMMAND_FIND_WORD = "find";
     private static final String COMMAND_FIND_DESC = "Finds all persons whose names contain any of the specified "
-                                        + "keywords (case-sensitive) and displays them as a list with index numbers.";
+            + "keywords (case-sensitive) and displays them as a list with index numbers.";
     private static final String COMMAND_FIND_PARAMETERS = "KEYWORD [MORE_KEYWORDS]";
     private static final String COMMAND_FIND_EXAMPLE = COMMAND_FIND_WORD + " alice bob charlie";
 
     private static final String COMMAND_FIND_INSENSITIVE_WORD = "findci";
-    private static final String COMMAND_FIND_INSENSITIVE_DESC = "Finds all persons whose names contain any of the specified "
-                                        + "keywords (case-insensitive) and displays them as a list with index numbers.";
+    private static final String COMMAND_FIND_INSENSITIVE_DESC = "Finds all persons whose names contain any of the "
+            + "specified keywords (case-insensitive) and displays them as a list with "
+            + "index numbers.";
     private static final String COMMAND_FIND_INSENSITIVE_PARAMETERS = "KEYWORD [MORE_KEYWORDS]";
     private static final String COMMAND_FIND_INSENSITIVE_EXAMPLE = COMMAND_FIND_INSENSITIVE_WORD + " AlIcE Bob carl";
 
@@ -194,7 +196,8 @@ public class AddressBook {
      * This is a subset of the full list. Deleting persons in the pull list does not delete
      * those persons from this list.
      */
-    private static ArrayList<String[]> latestPersonListingView = getAllPersonsInAddressBook(); // initial view is of all
+    private static ArrayList<String[]> latestPersonListingView = getAllPersonsInAddressBook(); // initial view is of
+            // all
 
     /**
      * The path to the file used for storing person data.
@@ -516,12 +519,14 @@ public class AddressBook {
     }
 
     /**
-     * Retrieves all persons in the full model whose names contain some of the specified keywords. This version is not case sensitive
+     * Retrieves all persons in the full model whose names contain some of the specified keywords.
+     * This version is not case sensitive
      *
      * @param keywords for searching
      * @return list of persons in full model with name containing some of the keywords
      */
-    private static ArrayList<String[]> getPersonsWithNameContainingAnyKeywordCaseInsensitive(Collection<String> keywords) {
+    private static ArrayList<String[]> getPersonsWithNameContainingAnyKeywordCaseInsensitive(
+            Collection<String> keywords) {
         final ArrayList<String[]> matchedPersons = new ArrayList<>();
         for (String[] person : getAllPersonsInAddressBook()) {
             final Set<String> wordsInName = new HashSet<>(splitByWhitespace(getNameFromPerson(person).toLowerCase()));
@@ -697,7 +702,8 @@ public class AddressBook {
      * @return formatted listing message with index
      */
     private static String getIndexedPersonListElementMessage(int visibleIndex, String[] person) {
-        return String.format(MESSAGE_DISPLAY_LIST_ELEMENT_INDEX, visibleIndex) + getMessageForFormattedPersonData(person);
+        return String.format(MESSAGE_DISPLAY_LIST_ELEMENT_INDEX, visibleIndex) +
+                getMessageForFormattedPersonData(person);
     }
 
     /**
@@ -829,7 +835,8 @@ public class AddressBook {
     /**
      * Deletes the specified person from the addressbook if it is inside. Saves any changes to storage file.
      *
-     * @param exactPerson the actual person inside the address book (exactPerson == the person to delete in the full list)
+     * @param exactPerson the actual person inside the address book (exactPerson ==
+     *                    the person to delete in the full list)
      * @return true if the given person was found and deleted in the model
      */
     private static boolean deletePersonFromAddressBook(String[] exactPerson) {
