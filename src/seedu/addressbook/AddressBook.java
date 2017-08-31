@@ -389,6 +389,7 @@ public class AddressBook {
             return executeAddPerson(commandArgs);
         case COMMAND_FIND_INSENSITIVE_WORD:
             return executeFindPersonsCaseInsensitive(commandArgs.toLowerCase());
+            // the argument is made lowercase
         case COMMAND_FIND_WORD:
             return executeFindPersons(commandArgs);
         case COMMAND_LIST_WORD:
