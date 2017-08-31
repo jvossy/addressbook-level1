@@ -388,8 +388,7 @@ public class AddressBook {
         case COMMAND_ADD_WORD:
             return executeAddPerson(commandArgs);
         case COMMAND_FIND_INSENSITIVE_WORD:
-            return executeFindPersonsCaseInsensitive(commandArgs.toLowerCase());
-            // the argument is made lowercase
+            return executeFindPersonsCaseInsensitive(commandArgs);
         case COMMAND_FIND_WORD:
             return executeFindPersons(commandArgs);
         case COMMAND_LIST_WORD:
@@ -482,12 +481,13 @@ public class AddressBook {
 
     /**
      * Finds and lists all persons in address book whose name contains any of the argument keywords.
-     * Keyword matching WILL NOT BE(is currently) case sensitive
+     * Keyword matching is not case sensitive.
      *
      * @param commandArgs full command args string from the user
      * @return feedback display message for the operation result
      */
     private static String executeFindPersonsCaseInsensitive(String commandArgs) {
+        commandArgs = commandArgs.toLowerCase();
         final Set<String> keywords = extractKeywordsFromFindPersonArgs(commandArgs);
         final ArrayList<String[]> personsFound = getPersonsWithNameContainingAnyKeywordCaseInsensitive(keywords);
         showToUser(personsFound);
@@ -535,9 +535,9 @@ public class AddressBook {
 
     /**
      * Retrieves all persons in the full model whose names contain some of the specified keywords.
-     * This version is not case sensitive
+     * This version is not case sensitive.
      *
-     * @param keywords for searching
+     * @param keywords for searching. Must be all lowercase for case insensitivity to hold
      * @return list of persons in full model with name containing some of the keywords
      */
     private static ArrayList<String[]> getPersonsWithNameContainingAnyKeywordCaseInsensitive(
