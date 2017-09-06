@@ -506,7 +506,8 @@ public class AddressBook {
     }
 
     /**
-     * Extracts keywords from the command arguments given for the find persons command.
+     * Extracts keywords from the command arguments given for the find persons command, as well as
+     *  the find case insensitive command.
      *
      * @param findPersonCommandArgs full command args string for the find persons command
      * @return set of keywords as specified by args
