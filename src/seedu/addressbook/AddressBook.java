@@ -518,6 +518,7 @@ public class AddressBook {
 
     /**
      * Retrieves all persons in the full model whose names contain some of the specified keywords.
+     * Requires one of the words in their name to be the entire word being searched.
      *
      * @param keywords for searching
      * @return list of persons in full model with name containing some of the keywords
