@@ -1,6 +1,7 @@
 package seedu.addressbook;
 
 /*
+ * Code provided by CS2103, updated by Jacob Vosburgh
  * NOTE : =============================================================
  * This class is written in a procedural fashion (i.e. not Object-Oriented)
  * Yes, it is possible to write non-OO code using an OO language.
