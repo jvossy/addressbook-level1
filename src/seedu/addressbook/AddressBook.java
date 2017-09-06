@@ -536,7 +536,7 @@ public class AddressBook {
 
     /**
      * Retrieves all persons in the full model whose names contain some of the specified keywords.
-     * This version is not case sensitive.
+     * This version is not case sensitive, although it requires inputs to be already made lowercase
      *
      * @param keywords for searching. Must be all lowercase for case insensitivity to hold
      * @return list of persons in full model with name containing some of the keywords
