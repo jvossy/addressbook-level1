@@ -3,6 +3,7 @@ package seedu.addressbook;
 /*
  * Code provided by CS2103, updated by Jacob Vosburgh
  * It serves as a demonstration of baseline understanding of github functionality.
+ * Here is a better line that contains one long word, extraterrestrial.
  * NOTE : =============================================================
  * This class is written in a procedural fashion (i.e. not Object-Oriented)
  * Yes, it is possible to write non-OO code using an OO language.
